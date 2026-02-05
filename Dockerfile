@@ -1,4 +1,4 @@
-FROM node:25.3.0
+FROM node:3.0.18-1
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     imagemagick \
