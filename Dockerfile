@@ -1,4 +1,4 @@
-FROM node:18.20.7-bookworm
+FROM node:25.3.0
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     imagemagick \
