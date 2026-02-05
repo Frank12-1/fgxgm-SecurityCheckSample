@@ -1,10 +1,5 @@
-FROM node:18.20.7
+FROM node:18.20.7-bookworm
 
-FROM node:18.20.7
-
-# 1. Update the package list
-# 2. Upgrade the specific packages flagged by Snyk
-# 3. Clean up to keep the image size small
 RUN apt-get update && apt-get install -y --no-install-recommends \
     imagemagick \
     libmagickwand-dev \
@@ -14,16 +9,21 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libsqlite3-dev \
     libssl-dev \
     openssl \
+    zlib1g \
+    zlib1g-dev \
+    git \
+    curl \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-RUN npm install -g npm@9.1.3
+RUN npm install -g npm@latest
 
-ADD package.json .
-ADD index.js .
-ADD build .
-COPY . .
+WORKDIR /app
+
+COPY package*.json ./
 RUN npm install
+
+COPY . .
 
 EXPOSE 8080
 
